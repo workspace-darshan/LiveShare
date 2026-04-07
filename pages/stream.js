@@ -144,6 +144,20 @@ export default function Stream() {
 
   const startScreenShare = async () => {
     try {
+      // Check if on mobile
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      
+      if (isMobile) {
+        alert('Screen sharing is not supported on mobile devices. Please use a desktop browser (Chrome, Firefox, Edge, or Safari).')
+        return
+      }
+
+      // Check if getDisplayMedia is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+        alert('Screen sharing is not supported in this browser. Please use Chrome, Firefox, Edge, or Safari.')
+        return
+      }
+
       // Get screen share
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
